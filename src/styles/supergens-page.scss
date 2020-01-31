@@ -1,0 +1,24 @@
+.supergens-container {
+  display: flex;
+  flex-direction: row;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.supergen {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  &.hidden {
+    display: none;
+  }
+  .sounds {
+    font-size: 11px;
+    margin-top: 5px;
+    margin-left: 25px;
+  }
+} 
