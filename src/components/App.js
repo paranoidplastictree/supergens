@@ -1,10 +1,7 @@
 /* eslint-disable import/no-named-as-default */
 import { NavLink, Route, Switch } from "react-router-dom";
 
-import AboutPage from "./AboutPage";
-import FuelSavingsPage from "./containers/FuelSavingsPage";
 import SupergensPage from "./containers/SupergensPage";
-import HomePage from "./HomePage";
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import React from "react";
@@ -16,23 +13,18 @@ import { hot } from "react-hot-loader";
 
 class App extends React.Component {
   render() {
-    const activeStyle = { color: 'blue' };
+    const activeStyle = { color: "#60b044" };
     return (
-      <div>
-        <div>
-          <NavLink exact to="/" activeStyle={activeStyle}>Home</NavLink>
+      <div className="app-wrapper">
+        <div className="navigation">
+          <NavLink exact to="/" activeStyle={activeStyle}>home</NavLink>
           {' | '}
-          <NavLink to="/fuel-savings" activeStyle={activeStyle}>Demo App</NavLink>
+          <a href="https://mynoise.net/" className="mynoise">mynoise.net</a>
           {' | '}
-          <NavLink to="/about" activeStyle={activeStyle}>About</NavLink>
-          {' | '}
-          <NavLink to="/supergens" activeStyle={activeStyle}>Supergens</NavLink>
+          <a href="https://www.reddit.com/r/MyNoise/comments/3hw95k/supergen_masterlist/">reddit masterlist</a>
         </div>
         <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/fuel-savings" component={FuelSavingsPage} />
-          <Route path="/supergens" component={SupergensPage} />
-          <Route path="/about" component={AboutPage} />
+          <Route exact path="/" component={SupergensPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>

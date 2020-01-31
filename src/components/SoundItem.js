@@ -3,16 +3,6 @@ import {sound} from '../types';
 import { func } from 'prop-types';
 
 class SoundItem extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
-  // onToggleFavorite = () => {
-  //   this.props.onSetFavorite(this.props.supergen.id, !state.favorite);
-  //   this.setState(state => ({
-  //     favorite: !state.favorite,
-  //   }));
-  // };
 
   onToggle = () => {
     this.props.setSoundSelected(this.props.sound.id, !this.props.sound.isSelected);

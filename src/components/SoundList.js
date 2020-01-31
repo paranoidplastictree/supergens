@@ -6,15 +6,13 @@ const SoundList = ({
   sounds,
   setSoundSelected
 }) => (
-  <ul className="sound-list flex-container">
-    {sounds.map(sound => (
-      <SoundItem
-        key={sound.id}
-        sound={sound}
-        setSoundSelected={setSoundSelected}
-      />
-    ))}
-  </ul>
+  <div className="sound-list flex-container">
+    <ul>
+      {sounds.map(sound => (
+        <SoundItem key={sound.id} sound={sound} setSoundSelected={setSoundSelected} />
+      ))}
+    </ul>
+  </div>
 );
 
 SoundList.propTypes = {

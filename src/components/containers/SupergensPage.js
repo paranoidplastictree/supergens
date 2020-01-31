@@ -25,21 +25,24 @@ export class SupergensPage extends React.Component {
   render() {
     const { supergens, loadingSupergens, loadingSoundFilters, sounds, searchText } = this.props;
     return (
-      <div className="supergens-container flex-container">
-        <div className="sounds flex-item-auto">
-          <div className="search">
-            <input type="text" onChange={this.onChangeSearchText} value={searchText} />
+      <div className="supergen-page">
+        <div className="supergens-container flex-container">
+          <div className="sounds flex-item-auto">
+            <div className="search">
+              <h2>Sounds</h2>
+              <input type="text" onChange={this.onChangeSearchText} value={searchText} placeholder="search for a sound..." />
+            </div>
+            <SoundList sounds={sounds} setSoundSelected={this.setSoundSelected} loading={loadingSoundFilters} />
           </div>
-          <SoundList sounds={sounds} setSoundSelected={this.setSoundSelected} loading={loadingSoundFilters} />
-        </div>
-        <div className="supergens">
-          {loadingSupergens && <div>Loading ...</div>}
+          <div className="supergens">
+            {loadingSupergens && <div>Loading ...</div>}
 
-          {supergens && (
-            <SupergenList supergens={supergens} />
-          )}
+            {supergens && (
+              <SupergenList supergens={supergens} />
+            )}
 
-          {!supergens && <div>There are no supergens ...</div>}
+            {!supergens && <div>There are no supergens ...</div>}
+          </div>
         </div>
       </div>
     );
