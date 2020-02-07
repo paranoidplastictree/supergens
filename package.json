@@ -2,11 +2,14 @@
   "name": "supegens",
   "version": "0.1.0",
   "description": "MyNoise.net Supergen Master List",
+  "homepage": "http://timstorms.me/supergens",
   "engines": {
     "node": ">=8",
     "npm": ">=3"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "preinstall": "node tools/nodeVersionCheck.js",
     "remove-demo": "babel-node tools/removeDemo.js",
     "start-message": "babel-node tools/startMessage.js",
@@ -34,6 +37,7 @@
     "@hot-loader/react-dom": "16.10.2",
     "connected-react-router": "6.5.2",
     "fs": "0.0.1-security",
+    "gh-pages": "2.2.0",
     "object-assign": "4.1.1",
     "path": "0.12.7",
     "react": "16.11.0",
