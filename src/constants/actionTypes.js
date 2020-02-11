@@ -1,4 +1,0 @@
-export const SET_SOUND_SELECTED = 'SET_SOUND_SELECTED';
-export const SET_SEARCH_TEXT = 'SET_SEARCH_TEXT';
-export const GET_SOUNDS = 'GET_SOUNDS';
-export const GET_SUPERGENS = 'GET_SUPERGENS';
