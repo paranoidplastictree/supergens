@@ -1,3 +1,5 @@
+http://paranoidplastictree.github.io/supergens
+
 This is a searchable, filterable rendering of the data that makes up the mynoise supergen master list on reddit.
 
 I do not own mynoise.net and I am not responsible for the reddit master list.
