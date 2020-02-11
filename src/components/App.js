@@ -17,7 +17,7 @@ class App extends React.Component {
     return (
       <div className="app-wrapper">
         <div className="navigation">
-          <NavLink exact to="/" activeStyle={activeStyle}>home</NavLink>
+          <NavLink exact to="/supergens" activeStyle={activeStyle}>home</NavLink>
           {' | '}
           <a href="https://mynoise.net/" className="mynoise">mynoise.net</a>
           {' | '}
@@ -25,6 +25,7 @@ class App extends React.Component {
         </div>
         <Switch>
           <Route exact path="/" component={SupergensPage} />
+          <Route exact path="/supergens" component={SupergensPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
