@@ -2,16 +2,6 @@ import * as ActionTypes from '../constants/actionTypes';
 import reducer from './supergensReducer';
 
 describe('Reducers::Supergens', () => {
-  const getInitialState = () => {
-    return {
-      searchText: '',
-      loadingSupergens: false,
-      loadingSoundFilters: false,
-      supergens: [],
-      filteredSupergens: [],
-      sounds: []
-    };
-  };
 
   const getAppState = () => {
     return {
@@ -109,13 +99,6 @@ describe('Reducers::Supergens', () => {
     };
   };
   
-  it('should set initial state by default', () => {
-    const action = { type: 'unknown' };
-    const expected = getInitialState();
-
-    expect(reducer(undefined, action)).toEqual(expected);
-  });
-
   it('should handle SET_SOUND_SELECTED', () => {
     const action = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 2, isSelected: true };
     var result = reducer(getAppState(), action);
