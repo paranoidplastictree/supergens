@@ -38,6 +38,8 @@ export default function supergensReducer(state = initialState.supergens, action)
             selectedFilterCount = selectedFilterCount + 1;
           }
           return itemCopy;
+        } else if (item.isSelected) {
+          selectedFilterCount = selectedFilterCount + 1;
         }
         return item;
       });
@@ -53,7 +55,7 @@ export default function supergensReducer(state = initialState.supergens, action)
       
       newState.filteredSounds = filteredSoundsCopy;
       newState.sounds = soundsCopy;
-  
+
       var supergenCopy = newState.filteredSupergens.map(supergen => {
         var newSupergen = objectAssign({}, supergen)
         if(selectedFilterCount === 0) {
@@ -63,17 +65,17 @@ export default function supergensReducer(state = initialState.supergens, action)
           filteredSoundsCopy.forEach((filteredSound) => {
             if (filteredSound.isSelected) {
               newSupergen.sounds.forEach((sound) => {
-                if(sound.name === filteredSound.name)
+                if(sound.name === filteredSound.name) {
                   matches = matches + 1;
+                }
               });
             }
           });
-          console.log('MATCHES FOUND: ' + matches);
           newSupergen.show = matches > 0;
         }
         return newSupergen;
       });
-
+        
       newState.filteredSupergens = supergenCopy;
 
       return newState;
