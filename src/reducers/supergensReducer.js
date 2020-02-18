@@ -2,6 +2,7 @@ import {GET_SUPERGENS, GET_SOUNDS, SET_SOUND_SELECTED, SET_SEARCH_TEXT} from '..
 import {loadSounds, loadSupergens} from '../utils/supergens';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
+import Immutable from 'immutable';
 
 export default function supergensReducer(state = initialState.supergens, action) {
   let newState;
