@@ -1,6 +1,7 @@
 import React from 'react';
 import SoundItem from './SoundItem';
-import { func, array } from 'prop-types';
+import PropTypes from 'prop-types';
+import Immutable from 'immutable';
 
 const SoundList = ({
   sounds,
@@ -9,15 +10,15 @@ const SoundList = ({
   <div className="sound-list flex-container">
     <ul>
       {sounds.map(sound => (
-        <SoundItem key={sound.id} sound={sound} setSoundSelected={setSoundSelected} />
+        <SoundItem key={sound.get('id')} sound={sound} setSoundSelected={setSoundSelected} />
       ))}
     </ul>
   </div>
 );
 
 SoundList.propTypes = {
-  setSoundSelected: func.isRequired,
-  sounds: array.isRequired
+  setSoundSelected: PropTypes.func.isRequired,
+  sounds: PropTypes.instanceOf(Immutable.List).isRequired
 };
 
 export default SoundList;

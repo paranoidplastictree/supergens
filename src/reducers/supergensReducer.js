@@ -11,16 +11,16 @@ export default function supergensReducer(state = initialState.get('supergens'), 
       if (state.get('sounds').size > 0) return state;
 
       var sounds = loadSounds();
-      newState = state.set('filteredSounds', sounds);
-      newState = newState.set('sounds', sounds);
+      newState = state.set('filteredSounds', Immutable.fromJS(sounds));
+      newState = newState.set('sounds', Immutable.fromJS(sounds));
       return newState.set('loadingSounds', false);
     
     case GET_SUPERGENS:
       if (state.get('supergens').size > 0) return state;
 
       var supergens = loadSupergens();
-      newState = state.set('filteredSupergens', supergens);
-      newState = newState.set('supergens', supergens);
+      newState = state.set('filteredSupergens', Immutable.fromJS(supergens));
+      newState = newState.set('supergens', Immutable.fromJS(supergens));
       return newState.set('loadingSupergens', false);
 
     case SET_SOUND_SELECTED:

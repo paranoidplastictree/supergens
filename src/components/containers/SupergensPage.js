@@ -6,6 +6,7 @@ import * as actions from '../../actions/supergensActions';
 import SoundList from '../SoundList';
 import SupergenList from '../SupergenList';
 import '../../styles/supergens-page.scss';
+import Immutable from 'immutable';
 
 export class SupergensPage extends React.Component {
 
@@ -51,8 +52,8 @@ export class SupergensPage extends React.Component {
 
 SupergensPage.propTypes = {
   actions: PropTypes.object.isRequired,
-  supergens: PropTypes.array.isRequired,
-  sounds: PropTypes.array.isRequired,
+  supergens: PropTypes.instanceOf(Immutable.List).isRequired,
+  sounds: PropTypes.instanceOf(Immutable.List).isRequired,
   searchText: PropTypes.string.isRequired,
   loadingSupergens: PropTypes.bool.isRequired,
   loadingSoundFilters: PropTypes.bool.isRequired
@@ -60,11 +61,11 @@ SupergensPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    supergens: state.supergens.filteredSupergens,
-    sounds: state.supergens.filteredSounds,
-    searchText: state.supergens.searchText,
-    loadingSupergens: state.supergens.loadingSupergens,
-    loadingSoundFilters: state.supergens.loadingSoundFilters
+    supergens: state.supergens.get('filteredSupergens'),
+    sounds: state.supergens.get('filteredSounds'),
+    searchText: state.supergens.get('searchText'),
+    loadingSupergens: state.supergens.get('loadingSupergens'),
+    loadingSoundFilters: state.supergens.get('loadingSoundFilters')
   };
 }
 
