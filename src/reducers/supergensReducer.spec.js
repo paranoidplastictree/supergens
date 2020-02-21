@@ -1,20 +1,11 @@
 import * as ActionTypes from '../constants/actionTypes';
 import reducer from './supergensReducer';
+import Immutable from 'immutable';
 
 describe('Reducers::Supergens', () => {
-  const getInitialState = () => {
-    return {
-      searchText: '',
-      loadingSupergens: false,
-      loadingSoundFilters: false,
-      supergens: [],
-      filteredSupergens: [],
-      sounds: []
-    };
-  };
 
   const getAppState = () => {
-    return {
+    return Immutable.fromJS({
       searchText: 'test',
       loadingSupergens: false,
       loadingSoundFilters: false,
@@ -106,19 +97,12 @@ describe('Reducers::Supergens', () => {
         {"id":13,"name":"Paraglide"},
         {"id":14,"name":"Shortwaves"}
       ]
-    };
+    });
   };
-  
-  it('should set initial state by default', () => {
-    const action = { type: 'unknown' };
-    const expected = getInitialState();
-
-    expect(reducer(undefined, action)).toEqual(expected);
-  });
 
   it('should handle SET_SOUND_SELECTED', () => {
     const action = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 2, isSelected: true };
-    var result = reducer(getAppState(), action);
+    const result = reducer(getAppState(), action).toJS();
 
     expect(result.sounds.length).toEqual(15);
     expect(result.filteredSounds.length).toEqual(15);
@@ -135,7 +119,7 @@ describe('Reducers::Supergens', () => {
     var result1 = reducer(getAppState(), action1);
 
     const action2 = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 4, isSelected: true };
-    var result = reducer(result1, action2);
+    var result = reducer(result1, action2).toJS();
 
     expect(result.sounds.length).toEqual(15);
     expect(result.filteredSounds.length).toEqual(15);
@@ -156,13 +140,14 @@ describe('Reducers::Supergens', () => {
 
   it('should handle SET_SOUND_SELECTED deselect', () => {
     const action1 = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 8, isSelected: true };
-    var result1 = reducer(getAppState(), action1);
+    const result1 = reducer(getAppState(), action1);
 
     const action2 = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 3, isSelected: true };
-    var result2 = reducer(result1, action2);
+    const result2 = reducer(result1, action2);
 
     const action3 = { type: ActionTypes.SET_SOUND_SELECTED, soundId: 3, isSelected: false };
-    var result = reducer(result2, action3);
+    const result3 = reducer(result2, action3);
+    const result = result3.toJS();
 
     expect(result.sounds.length).toEqual(15);
     expect(result.filteredSounds.length).toEqual(15);

@@ -1,104 +1,91 @@
 import {GET_SUPERGENS, GET_SOUNDS, SET_SOUND_SELECTED, SET_SEARCH_TEXT} from '../constants/actionTypes';
 import {loadSounds, loadSupergens} from '../utils/supergens';
-import objectAssign from 'object-assign';
 import initialState from './initialState';
 import Immutable from 'immutable';
 
-export default function supergensReducer(state = initialState.supergens, action) {
+export default function supergensReducer(state = initialState.get('supergens'), action) {
   let newState;
 
   switch (action.type) {
     case GET_SOUNDS:
-      if (state.sounds.length > 0) return state;
-      newState = objectAssign({}, state);
+      if (state.get('sounds').size > 0) return state;
 
       var sounds = loadSounds();
-      newState.filteredSounds = sounds;
-      newState.sounds = sounds;
-      newState.loadingSounds = false;
-      return newState;
+      newState = state.set('filteredSounds', sounds);
+      newState = newState.set('sounds', sounds);
+      return newState.set('loadingSounds', false);
     
     case GET_SUPERGENS:
-      if (state.supergens.length > 0) return state;
-      newState = objectAssign({}, state);
+      if (state.get('supergens').size > 0) return state;
 
       var supergens = loadSupergens();
-      newState.filteredSupergens = supergens;
-      newState.supergens = supergens;
-      newState.loadingSupergens = false;
-      return newState;
+      newState = state.set('filteredSupergens', supergens);
+      newState = newState.set('supergens', supergens);
+      return newState.set('loadingSupergens', false);
 
     case SET_SOUND_SELECTED:
-      newState = objectAssign({}, state);
+      newState = state;
       var selectedFilterCount = 0;
-      var soundsCopy = state.sounds.map(item => {
-        if (item.id === action.soundId) {
-          var itemCopy = objectAssign({}, item);
-          itemCopy.isSelected = action.isSelected;
+      var soundsCopy = state.get('sounds').map(item => {
+
+        if (item.get('id') === action.soundId) {
+          item = item.set('isSelected', action.isSelected);
           if (action.isSelected) {
             selectedFilterCount = selectedFilterCount + 1;
           }
-          return itemCopy;
-        } else if (item.isSelected) {
+        } else if (item.get('isSelected')) {
           selectedFilterCount = selectedFilterCount + 1;
         }
         return item;
       });
 
-      var filteredSoundsCopy = state.filteredSounds.map(item => {
-        if (item.id === action.soundId) {
-          var itemCopy = objectAssign({}, item);
-          itemCopy.isSelected = action.isSelected;
-          return itemCopy;
+      var filteredSoundsCopy = state.get('filteredSounds').map(item => {
+        if (item.get('id') === action.soundId) {
+          item = item.set('isSelected', action.isSelected);
         }
         return item;
       });
       
-      newState.filteredSounds = filteredSoundsCopy;
-      newState.sounds = soundsCopy;
+      newState = newState.set('filteredSounds', filteredSoundsCopy);
+      newState = newState.set('sounds', soundsCopy);
 
-      var supergenCopy = newState.filteredSupergens.map(supergen => {
-        var newSupergen = objectAssign({}, supergen)
+      var supergenCopy = newState.get('filteredSupergens').map(supergen => {
         if(selectedFilterCount === 0) {
-          newSupergen.show = true;
+          supergen = supergen.set('show', true);
         } else {
           let matches = 0;
           filteredSoundsCopy.forEach((filteredSound) => {
-            if (filteredSound.isSelected) {
-              newSupergen.sounds.forEach((sound) => {
-                if(sound.name === filteredSound.name) {
+            if (filteredSound.get('isSelected')) {
+              supergen.get('sounds').forEach((sound) => {
+                if(sound.get('name') === filteredSound.get('name')) {
                   matches = matches + 1;
                 }
               });
             }
           });
-          newSupergen.show = matches > 0;
+          supergen = supergen.set('show', matches > 0);
         }
-        return newSupergen;
+        return supergen;
       });
         
-      newState.filteredSupergens = supergenCopy;
-
-      return newState;
+      return newState.set('filteredSupergens', supergenCopy);
 
     case SET_SEARCH_TEXT:
-      newState = objectAssign({}, state, {searchText: action.value});
+      newState = state.set('searchText', action.value);
 
       if (action.value === '') {
-        newState.filteredSounds = state.sounds;
-        return newState;
+        return newState.set('filteredSounds', state.get('sounds'));
       }
   
       var soundsList = [];
       var searchText = action.value.toUpperCase();
-      newState.sounds.forEach((item) => {
-        if (item.name.toUpperCase().includes(searchText)) {
+      newState.get('sounds').forEach((item) => {
+        if (item.get('name').toUpperCase().includes(searchText)) {
           soundsList.push(item);
         }
       });
-      newState.filteredSounds = soundsList;
 
-      return newState;
+      return newState.set('filteredSounds', Immutable.fromJS(soundsList));
       
     default:
       return state;

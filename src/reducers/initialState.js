@@ -1,4 +1,6 @@
-export default {
+import Immutable from 'immutable';
+
+export default Immutable.fromJS({
   supergens: {
     searchText: '',
     loadingSupergens: false,
@@ -8,4 +10,4 @@ export default {
     sounds: [],
     filteredSounds: []
   }
-};
+});
