@@ -11,81 +11,89 @@ export default function supergensReducer(state = initialState.get('supergens'), 
       if (state.get('sounds').size > 0) return state;
 
       var sounds = loadSounds();
-      newState = state.set('filteredSounds', Immutable.fromJS(sounds));
-      newState = newState.set('sounds', Immutable.fromJS(sounds));
+      newState = state.set('sounds', Immutable.fromJS(sounds));
       return newState.set('loadingSounds', false);
     
     case GET_SUPERGENS:
       if (state.get('supergens').size > 0) return state;
 
       var supergens = loadSupergens();
-      newState = state.set('filteredSupergens', Immutable.fromJS(supergens));
-      newState = newState.set('supergens', Immutable.fromJS(supergens));
+      newState = state.set('supergens', Immutable.fromJS(supergens));
       return newState.set('loadingSupergens', false);
 
     case SET_SOUND_SELECTED:
-      newState = state;
-      var selectedFilterCount = 0;
-      var soundsCopy = state.get('sounds').map(item => {
 
-        if (item.get('id') === action.soundId) {
-          item = item.set('isSelected', action.isSelected);
-          if (action.isSelected) {
-            selectedFilterCount = selectedFilterCount + 1;
-          }
-        } else if (item.get('isSelected')) {
-          selectedFilterCount = selectedFilterCount + 1;
+      var list = state.get('sounds');
+      list = list.update(
+        list.findIndex((item) => {
+          return item.get('id') === action.soundId;
+        }),
+        (s) => {
+          return s.set('isSelected', action.isSelected);
         }
-        return item;
-      });
+      );
 
-      var filteredSoundsCopy = state.get('filteredSounds').map(item => {
-        if (item.get('id') === action.soundId) {
-          item = item.set('isSelected', action.isSelected);
-        }
-        return item;
+      // var soundsCopy = state.get('sounds').map(item => {
+
+      //   if (item.get('id') === action.soundId) {
+      //     item = item.set('isSelected', action.isSelected);
+      //     if (action.isSelected) {
+      //       selectedFilterCount = selectedFilterCount + 1;
+      //     }
+      //   } else if (item.get('isSelected')) {
+      //     selectedFilterCount = selectedFilterCount + 1;
+      //   }
+      //   return item;
+      // });
+
+      // var filteredSoundsCopy = state.get('filteredSounds').map(item => {
+      //   if (item.get('id') === action.soundId) {
+      //     item = item.set('isSelected', action.isSelected);
+      //   }
+      //   return item;
+      // });
+      
+      newState = state.set('sounds', list);
+
+      var soundsSet = new Immutable.Set(list.filter(item => item.get('isSelected')).map(item => item.get('id')));
+      var supergenList = newState.get('supergens');
+      supergenList = supergenList.map(supergen => {
+        var childrenSet = new Immutable.Set(supergen.get('sounds').map(item => item.get('id')));
+        var intersection = soundsSet.intersect(childrenSet);
+        return supergen.set('show', intersection.size > 0);
       });
       
-      newState = newState.set('filteredSounds', filteredSoundsCopy);
-      newState = newState.set('sounds', soundsCopy);
-
-      var supergenCopy = newState.get('filteredSupergens').map(supergen => {
-        if(selectedFilterCount === 0) {
-          supergen = supergen.set('show', true);
-        } else {
-          let matches = 0;
-          filteredSoundsCopy.forEach((filteredSound) => {
-            if (filteredSound.get('isSelected')) {
-              supergen.get('sounds').forEach((sound) => {
-                if(sound.get('name') === filteredSound.get('name')) {
-                  matches = matches + 1;
-                }
-              });
-            }
-          });
-          supergen = supergen.set('show', matches > 0);
-        }
-        return supergen;
-      });
+      // var supergenCopy = newState.get('filteredSupergens').map(supergen => {
+      //   if(selectedFilterCount === 0) {
+      //     supergen = supergen.set('show', true);
+      //   } else {
+      //     let matches = 0;
+      //     filteredSoundsCopy.forEach((filteredSound) => {
+      //       if (filteredSound.get('isSelected')) {
+      //         supergen.get('sounds').forEach((sound) => {
+      //           if(sound.get('name') === filteredSound.get('name')) {
+      //             matches = matches + 1;
+      //           }
+      //         });
+      //       }
+      //     });
+      //     supergen = supergen.set('show', matches > 0);
+      //   }
+      //   return supergen;
+      // });
         
-      return newState.set('filteredSupergens', supergenCopy);
+      return newState.set('supergens', supergenList);
 
     case SET_SEARCH_TEXT:
       newState = state.set('searchText', action.value);
-
-      if (action.value === '') {
-        return newState.set('filteredSounds', state.get('sounds'));
-      }
-  
-      var soundsList = [];
+      
+      var isEmptySearch = action.value === '';
       var searchText = action.value.toUpperCase();
-      newState.get('sounds').forEach((item) => {
-        if (item.get('name').toUpperCase().includes(searchText)) {
-          soundsList.push(item);
-        }
+      var searchedList = newState.get('sounds').map(item => {
+        return item.set('show', isEmptySearch || item.get('name').toUpperCase().includes(searchText));
       });
 
-      return newState.set('filteredSounds', Immutable.fromJS(soundsList));
+      return newState.set('sounds', searchedList);
       
     default:
       return state;

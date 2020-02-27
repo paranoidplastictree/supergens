@@ -9,9 +9,9 @@ const SoundList = ({
 }) => (
   <div className="sound-list flex-container">
     <ul>
-      {sounds.map(sound => (
+      {sounds.map(sound => {if (sound.get('show')) return (
         <SoundItem key={sound.get('id')} sound={sound} setSoundSelected={setSoundSelected} />
-      ))}
+      )})}
     </ul>
   </div>
 );

@@ -11,6 +11,7 @@ export function loadSupergens() {
 export function loadSounds() {
   return sounds.map(s => {
     s.isSelected = false;
+    s.show = true;
     return s;
   });
 }

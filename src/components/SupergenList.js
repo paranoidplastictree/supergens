@@ -7,9 +7,9 @@ const SupergenList = ({ supergens }) => (
   <div className="supergen-list flex-container">
     <h1>MyNoise Supergens</h1>
     <ul>
-      {supergens.map(supergen => (
+      {supergens.map(supergen => { if(supergen.get('show')) return (
         <SupergenItem key={supergen.get('id')} supergen={supergen} isFavorite={false} />
-      ))}
+      )})}
     </ul>
   </div>
 );

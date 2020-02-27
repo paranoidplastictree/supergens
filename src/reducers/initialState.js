@@ -6,8 +6,6 @@ export default Immutable.fromJS({
     loadingSupergens: false,
     loadingSoundFilters: false,
     supergens: [],
-    filteredSupergens: [],
-    sounds: [],
-    filteredSounds: []
+    sounds: []
   }
 });

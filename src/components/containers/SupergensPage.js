@@ -61,8 +61,8 @@ SupergensPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    supergens: state.supergens.get('filteredSupergens'),
-    sounds: state.supergens.get('filteredSounds'),
+    supergens: state.supergens.get('supergens'),
+    sounds: state.supergens.get('sounds'),
     searchText: state.supergens.get('searchText'),
     loadingSupergens: state.supergens.get('loadingSupergens'),
     loadingSoundFilters: state.supergens.get('loadingSoundFilters')
