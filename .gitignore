@@ -39,3 +39,5 @@ dist
 # Mac files
 .DS_Store
 node_modules
+
+README.md
