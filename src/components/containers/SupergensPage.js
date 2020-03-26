@@ -27,14 +27,13 @@ export class SupergensPage extends React.Component {
     return (
       <div className="supergen-page">
         <div className="supergens-container flex-container">
-          <div className="sounds flex-item-auto">
+          <div className="side-content flex-item-auto">
             <div className="search">
-              <h2>Sounds</h2>
-              <input type="text" onChange={this.onChangeSearchText} value={searchText} placeholder="search for a sound..." />
+              <input type="text" onChange={this.onChangeSearchText} value={searchText} placeholder="search..." />
             </div>
             <SoundList sounds={sounds} setSoundSelected={this.setSoundSelected} loading={loadingSoundFilters} />
           </div>
-          <div className="supergens">
+          <div className="main-content">
             {loadingSupergens && <div>Loading ...</div>}
 
             {supergens && (

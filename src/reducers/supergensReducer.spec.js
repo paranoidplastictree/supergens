@@ -2,7 +2,6 @@ import * as ActionTypes from '../constants/actionTypes';
 import reducer from './supergensReducer';
 
 describe('Reducers::Supergens', () => {
-
   const getAppState = () => {
     return {
       searchText: 'test',

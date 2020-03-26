@@ -2,22 +2,20 @@
 import { NavLink, Route, Switch } from "react-router-dom";
 
 import SupergensPage from "./containers/SupergensPage";
+import AboutPage from "./containers/AboutPage";
 import NotFoundPage from "./NotFoundPage";
 import PropTypes from "prop-types";
 import React from "react";
 import { hot } from "react-hot-loader";
 
-// This is a class-based component because the current
-// version of hot reloading won't hot reload a stateless
-// component at the top-level.
-
 class App extends React.Component {
   render() {
-    const activeStyle = { color: "#60b044" };
     return (
       <div className="app-wrapper">
         <div className="navigation">
-          <NavLink exact to="/supergens" activeStyle={activeStyle}>home</NavLink>
+          <NavLink exact to="/supergens" activeClassName="active">home</NavLink>
+          {' | '}
+          <NavLink exact to="/about" activeClassName="active">about</NavLink>
           {' | '}
           <a href="https://mynoise.net/" className="mynoise">mynoise.net</a>
           {' | '}
@@ -26,6 +24,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={SupergensPage} />
           <Route exact path="/supergens" component={SupergensPage} />
+          <Route exact path="/about" component={AboutPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
