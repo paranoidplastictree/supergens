@@ -9,7 +9,8 @@ describe('Reducers::Supergens', () => {
       loadingSoundFilters: false,
       supergens: [],
       filteredSupergens: [],
-      sounds: []
+      sounds: [],
+      filteredSounds: []
     };
   };
 

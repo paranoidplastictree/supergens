@@ -9,7 +9,7 @@ class SupergenItem extends Component {
     return (
       <li className={className}>
         <a className="flex-item-one" href={supergen.href} target="_blank" rel="noopener noreferrer">{supergen.name}</a>
-        <span className="flex-item-auto sounds">{supergen.sounds.map(s => s.name).join(', ')}</span>
+        <span className="flex-item-auto sound-names">{supergen.sounds.map(s => s.name).join(', ')}</span>
       </li>
     );
   }

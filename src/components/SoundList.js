@@ -7,6 +7,7 @@ const SoundList = ({
   setSoundSelected
 }) => (
   <div className="sound-list flex-container">
+    <h2>Sounds</h2>
     <ul>
       {sounds.map(sound => (
         <SoundItem key={sound.id} sound={sound} setSoundSelected={setSoundSelected} />

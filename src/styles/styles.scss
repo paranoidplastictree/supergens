@@ -1,7 +1,5 @@
-/* Variables */
 $vin-blue: #5bb7db;
 $vin-green: #60b044;
-$vin-red: #ff0000;
 
 body {
   font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -12,12 +10,8 @@ body {
   font-smoothing: antialiased;
   font-weight: 300;
   background-color: #242424;
-  color: #D58000;
-  opacity: 0.8;
-}
-
-td {
-	padding: 12px;
+  color: #CFCFCF;
+  opacity: 0.9;
 }
 
 h2 {
@@ -27,7 +21,30 @@ h2 {
 a, a:visited, a:link {
   text-decoration: none;
   padding: 5px;
+  color: $vin-blue;
 }
 
-.navigation { color: $vin-green; a { color: $vin-green; } }
-input.small { width: 46px; }
+.navigation { 
+  color: $vin-green;
+  width: 425px;
+  padding: 5px 0px 0px 25px;
+  background-color: #000000;
+  border-top-right-radius: 20px;
+  a { 
+    color: $vin-green;
+    &.active {
+      text-decoration: underline;
+    }
+  } 
+}
+
+.side-content {
+  padding: 25px;
+  background-color: #000000;
+  border-bottom-right-radius: 20px;
+  width: 400px;
+}
+
+.main-content {
+  margin: 25px;
+}
